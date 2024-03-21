@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grocery Store Inventory</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="{{url_for('static', filename='js/scripts.js')}}"></script>
+    <link href='https://fonts.googleapis.com/css?family=JetBrains Mono' rel='stylesheet'>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Grocery Store Inventory</h1>
+    </header>
+    
+    <main>
+        <input type="text" id="searchInput" placeholder="Search items...">
+        <button onclick="searchInventory()">Search</button>
+        <section>
+        <table id="inventoryTable" class="inventory-table">
+            <thead>
+                <tr>
+                    <th>Item Name</th>
+                    <th>Quantity</th>
+                    <th>Reorder Threshold</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in inventory_data %}
+                    <tr>
+                        <td>{{ item[1] }}</td>
+                        <td>{{ item[2] }}</td>
+                        <td>{{ item[3] }}</td>
+                        <td>
+                            <button class="update-stock-button" onclick="openUpdateModal('{{ item[0] }}', '{{ item[2] }}')">Update Stock</button>
+                            <button class="delete-item-button" onclick="confirmDelete('{{ item[0] }}')">Delete Item</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+            <a href="{{ url_for('display_inventory') }}" id="backToInventoryButton" style="display: none;">Back to Inventory</button>
+            <a class="add-item-button" href="{{ url_for('add_item') }}">Add Items</a>
+        </section>
+    </main>
+
+    <div id="updateStockModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeUpdateModal()">&times;</span>
+            <h2>Update Stock</h2>
+            <form id="updateStockForm">
+                <label for="new_quantity">New Quantity:</label>
+                <input type="number" id="new_quantity" name="new_quantity" required><br>
+    
+                <input type="hidden" id="item_id" name="item_id">
+                <br>
+    
+                <button type="button" onclick="updateStock()">Update Stock</button>
+            </form>
+        </div>
+    </div>
+    
+
+    <div id="notification-container"></div>
+    <footer>
+        <p>Antony Rishwyn&trade;</p>
+    </footer>
+</body>
+</html>
