@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Item</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Grocery Store Inventory</h1>
+    </header>
+    
+    <main>
+        <section>
+            <h2>Add New Item</h2>
+            <form action="/add_item" method="post">
+                <label for="item_name">Item Name:</label>
+                <input type="text" id="item_name" name="item_name" required>
+
+                <label for="quantity">Quantity:</label>
+                <input type="number" id="quantity" name="quantity" required>
+
+                <label for="reorder_threshold">Reorder Threshold:</label>
+                <input type="number" id="reorder_threshold" name="reorder_threshold" value="10" required>
+
+                <button type="submit">Add Item</button>
+            </form>
+            <a href="{{ url_for('display_inventory') }}" id="backToInventoryButton">Back to Inventory</a>
+        </section>
+    </main>
+</body>
+</html>
